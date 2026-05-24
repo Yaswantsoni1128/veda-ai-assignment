@@ -50,6 +50,18 @@ if (UPSTASH_URL && UPSTASH_TOKEN) {
     on(_ev: string, _fn: (...args: any[]) => void) {
       // no-op for Upstash REST
     },
+    async ping() {
+      const r = await upstashCmd(["PING"]);
+      return r?.result ?? 'PONG';
+    },
+    async quit() {
+      // no-op for REST client
+      return 'OK';
+    },
+    disconnect() {
+      // no-op for REST client
+    },
+    status: 'ready',
   };
 } else {
   client = new Redis({
